@@ -18,20 +18,20 @@ if app_dir not in sys.path:
 # Try different import strategies
 try:
     # For uvicorn from root directory
-    from app.routers import session_images, session_segmentation
+    from app.routers import session_images, session_segmentation, contributions
 
     logger.info("Using app.routers imports")
 except ImportError:
     try:
         # For running directly from app directory
-        from routers import session_images, session_segmentation
+        from routers import session_images, session_segmentation, contributions
 
         logger.info("Using direct routers imports")
     except ImportError as e:
         logger.error(f"Import error: {e}")
         # Final fallback - try with explicit path manipulation
         sys.path.insert(0, os.path.dirname(app_dir))
-        from app.routers import session_images, session_segmentation
+        from app.routers import session_images, session_segmentation, contributions
 
         logger.info("Using fallback app.routers imports")
 
@@ -73,6 +73,7 @@ def health_check():
 # Include session-based routers
 app.include_router(session_images.router, prefix="/api", tags=["images"])
 app.include_router(session_segmentation.router, prefix="/api", tags=["segmentation"])
+app.include_router(contributions.router, prefix="/api", tags=["contributions"])
 
 # Mount the uploads directory for static file serving
 app.mount("/uploads", StaticFiles(directory=str(uploads_dir)), name="uploads")

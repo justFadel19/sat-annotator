@@ -253,6 +253,69 @@ curl -X DELETE http://localhost:8000/api/session/
 curl -X POST http://localhost:8000/api/export-session/
 ```
 
+#### Contribution Tracking
+
+##### Get Your Endpoint Contributions
+
+```bash
+curl http://localhost:8000/api/contributions/my/
+```
+
+##### Get All Endpoint Contributions
+
+```bash
+curl http://localhost:8000/api/contributions/
+```
+
+##### Get Contributions Summary
+
+```bash
+curl http://localhost:8000/api/contributions/summary/
+```
+
+Expected response:
+
+```json
+{
+  "total_endpoints": 26,
+  "endpoints_by_method": {
+    "GET": 16,
+    "POST": 6,
+    "DELETE": 3,
+    "PUT": 1
+  },
+  "contributors": {
+    "Ahmed Fadel": {
+      "name": "Ahmed Fadel",
+      "email": "125441479+justFadel19@users.noreply.github.com",
+      "endpoints": [...]
+    }
+  }
+}
+```
+
+##### Get Contributions by Author
+
+```bash
+curl http://localhost:8000/api/contributions/by-author/Ahmed%20Fadel
+```
+
+##### List All Endpoints with Filtering
+
+```bash
+# Get all POST endpoints
+curl "http://localhost:8000/api/contributions/endpoints/?method=POST"
+
+# Get endpoints from specific file
+curl "http://localhost:8000/api/contributions/endpoints/?file_path=session_images"
+```
+
+##### Get Detailed Statistics
+
+```bash
+curl http://localhost:8000/api/contributions/stats/
+```
+
 #### Image Management
 
 ##### Upload an Image
@@ -413,6 +476,12 @@ For comprehensive API examples, see the **API Reference** section above.
 | `/api/session-info/`          | GET    | Get current session information           |
 | `/api/session/`               | DELETE | Clear all session data                    |
 | `/api/export-session/`        | POST   | Export session data as JSON               |
+| `/api/contributions/`         | GET    | Get all endpoint contributions            |
+| `/api/contributions/my/`      | GET    | Get current user's endpoint contributions |
+| `/api/contributions/summary/` | GET    | Get endpoint contributions summary        |
+| `/api/contributions/by-author/{name}` | GET | Get contributions by specific author |
+| `/api/contributions/endpoints/` | GET  | List all endpoints with filtering         |
+| `/api/contributions/stats/`   | GET    | Get detailed contribution statistics      |
 
 **Interactive Documentation:**
 
